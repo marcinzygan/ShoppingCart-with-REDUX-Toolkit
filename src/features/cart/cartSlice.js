@@ -3,7 +3,7 @@ import cartItems from "../../cartItems";
 
 const initialState = {
   cartItems: cartItems,
-  totalAmount: 4,
+  totalAmount: 0,
   total: 0,
   isLoading: true,
 };
@@ -29,11 +29,22 @@ const cartSlice = createSlice({
     decrease: (state, action) => {
       const itemId = action.payload;
       const cartItem = state.cartItems.find((item) => item.id === itemId);
-      if (cartItem.amount <= 1) return;
       cartItem.amount = cartItem.amount - 1;
+    },
+    cartCalcTotals: (state) => {
+      let amount = 0;
+      let total = 0;
+      state.cartItems.forEach((item) => {
+        amount = amount + item.amount;
+        total = total + item.amount * item.price;
+      });
+
+      state.totalAmount = amount;
+      state.total = total;
     },
   },
 });
 console.log(cartSlice);
-export const { clearCart, removeItem, increase, decrease } = cartSlice.actions;
+export const { clearCart, removeItem, increase, decrease, cartCalcTotals } =
+  cartSlice.actions;
 export default cartSlice.reducer;
