@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getCartItems());
-  }, []);
+  }, [dispatch]);
   useEffect(() => {
     dispatch(cartCalcTotals());
   }, [cartItems, dispatch]);
